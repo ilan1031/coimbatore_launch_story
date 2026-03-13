@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coimbatore — The City That Breathes Gold</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Google Analytics (replace GA_MEASUREMENT_ID with your actual GA4 ID) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
 <style>
   :root {
     --gold: #C9A84C;
@@ -987,7 +995,18 @@
     <p>Likes: <span id="like-count">0</span></p>
     <button id="like-btn" style="background: var(--gold); color: var(--ink); border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 12px;">👍 Like</button>
   </div>
-  <div id="disqus_thread"></div>
+  <div class="share-buttons" style="margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(window.location.href) target="_blank" style="background: #1877f2; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 12px;">Share on Facebook</a>
+    <a href="https://twitter.com/intent/tweet?url=" + encodeURIComponent(window.location.href) + "&text=Check out this story about Coimbatore!" target="_blank" style="background: #1da1f2; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 12px;">Share on Twitter</a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(window.location.href) target="_blank" style="background: #0077b5; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 12px;">Share on LinkedIn</a>
+  </div>
+  <script src="https://utteranc.es/client.js"
+          repo="ilan1031/coimbatore_launch_story"
+          issue-term="pathname"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
   <script>
     // Simple counters using localStorage (note: these are per-user, not global counts)
     let views = localStorage.getItem('views') || 0;
@@ -1004,20 +1023,6 @@
       document.getElementById('like-count').textContent = likes;
     });
   </script>
-  <script>
-    // Disqus comments (replace 'coimbatore-launch' with your actual Disqus site shortname)
-    var disqus_config = function () {
-      this.page.url = window.location.href;
-      this.page.identifier = 'coimbatore-launch-story';
-    };
-    (function() {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://coimbatore-launch.disqus.com/embed.js';  // Replace with your Disqus embed URL
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
 
 
