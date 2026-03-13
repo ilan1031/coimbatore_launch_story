@@ -978,6 +978,49 @@
 </section>
 
 
+<!-- ENGAGEMENT SECTION -->
+<section id="engagement" style="max-width: 860px; margin: 0 auto; padding: 80px 24px;">
+  <div class="chapter-tag">Engagement</div>
+  <h2>Share Your Thoughts</h2>
+  <div id="stats" style="margin: 20px 0; font-family: 'Space Mono', monospace; font-size: 14px; color: var(--gold);">
+    <p>Views: <span id="view-count">0</span></p>
+    <p>Likes: <span id="like-count">0</span></p>
+    <button id="like-btn" style="background: var(--gold); color: var(--ink); border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 12px;">👍 Like</button>
+  </div>
+  <div id="disqus_thread"></div>
+  <script>
+    // Simple counters using localStorage (note: these are per-user, not global counts)
+    let views = localStorage.getItem('views') || 0;
+    views = parseInt(views) + 1;
+    localStorage.setItem('views', views);
+    document.getElementById('view-count').textContent = views;
+
+    let likes = localStorage.getItem('likes') || 0;
+    document.getElementById('like-count').textContent = likes;
+
+    document.getElementById('like-btn').addEventListener('click', () => {
+      likes = parseInt(likes) + 1;
+      localStorage.setItem('likes', likes);
+      document.getElementById('like-count').textContent = likes;
+    });
+  </script>
+  <script>
+    // Disqus comments (replace 'coimbatore-launch' with your actual Disqus site shortname)
+    var disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = 'coimbatore-launch-story';
+    };
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://coimbatore-launch.disqus.com/embed.js';  // Replace with your Disqus embed URL
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
 <!-- FOOTER / LINKEDIN CLOSING -->
 <footer>
   <div class="logo">COIMBATORE</div>
