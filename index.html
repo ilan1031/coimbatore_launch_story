@@ -14,6 +14,25 @@
 
   gtag('config', 'G-BR76PWNRMB');
 </script>
+<script type="module">
+  // Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCn90V4Qvi6ObN7d7MZptWyGKapWCPgKmk",
+    authDomain: "ilan-a93fb.firebaseapp.com",
+    projectId: "ilan-a93fb",
+    storageBucket: "ilan-a93fb.firebasestorage.app",
+    messagingSenderId: "722913316783",
+    appId: "1:722913316783:web:8dd6a816b7c8bad147695a",
+    measurementId: "G-K8GTEXNJP0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  window.db = db;
+</script>
 <style>
   :root {
     --gold: #C9A84C;
@@ -1009,12 +1028,68 @@
     <a href="https://twitter.com/intent/tweet?url=" + encodeURIComponent(window.location.href) + "&text=Check out this story about Coimbatore!" target="_blank" style="background: #1da1f2; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 12px;">Share on Twitter</a>
     <a href="https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(window.location.href) target="_blank" style="background: #0077b5; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 12px;">Share on LinkedIn</a>
   </div>
-  <script src="https://utteranc.es/client.js"
-          repo="ilan1031/coimbatore_launch_story"
-          issue-term="pathname"
-          theme="github-light"
-          crossorigin="anonymous"
-          async>
+  <div id="comments" style="margin-top: 40px;">
+    <h3 style="color: var(--cream); font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 20px;">Comments</h3>
+    <div id="comment-form" style="margin-bottom: 20px;">
+      <input type="text" id="name" placeholder="Name" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid var(--gold); background: var(--ink); color: var(--cream); font-family: 'Space Mono', monospace;">
+      <textarea id="comment" placeholder="Comment" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid var(--gold); background: var(--ink); color: var(--cream); font-family: 'Space Mono', monospace; min-height: 80px;"></textarea>
+      <button id="submit-comment" style="background: var(--gold); color: var(--ink); border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-family: 'Space Mono', monospace;">Submit Comment</button>
+    </div>
+    <div id="comment-list"></div>
+  </div>
+  <script>
+    // Comments with Firebase
+    const commentForm = document.getElementById('comment-form');
+    const nameInput = document.getElementById('name');
+    const commentInput = document.getElementById('comment');
+    const submitBtn = document.getElementById('submit-comment');
+    const commentList = document.getElementById('comment-list');
+
+    // Load comments
+    async function loadComments() {
+      try {
+        const q = query(collection(window.db, 'comments'), orderBy('timestamp', 'desc'));
+        const querySnapshot = await getDocs(q);
+        commentList.innerHTML = '';
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const div = document.createElement('div');
+          div.style.marginBottom = '20px';
+          div.style.padding = '10px';
+          div.style.border = '1px solid rgba(201,168,76,0.3)';
+          div.style.borderRadius = '8px';
+          div.innerHTML = `<strong style="color: var(--gold);">${data.name}</strong>: ${data.comment} <small style="color: rgba(248,242,230,0.5);">${new Date(data.timestamp.seconds * 1000).toLocaleString()}</small>`;
+          commentList.appendChild(div);
+        });
+      } catch (error) {
+        console.error('Error loading comments:', error);
+      }
+    }
+
+    loadComments();
+
+    // Submit comment
+    submitBtn.addEventListener('click', async () => {
+      const name = nameInput.value.trim();
+      const comment = commentInput.value.trim();
+      if (name && comment) {
+        try {
+          await addDoc(collection(window.db, 'comments'), {
+            name,
+            comment,
+            timestamp: new Date()
+          });
+          nameInput.value = '';
+          commentInput.value = '';
+          loadComments();
+        } catch (error) {
+          console.error('Error submitting comment:', error);
+          alert('Error submitting comment. Please try again.');
+        }
+      } else {
+        alert('Please fill in both name and comment.');
+      }
+    });
   </script>
   <script>
     // Counters using CountAPI (free, IP-based limiting)
