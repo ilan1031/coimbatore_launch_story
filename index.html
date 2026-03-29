@@ -47,6 +47,10 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background: var(--ink);
     font-family: 'Cormorant Garamond', serif;
@@ -54,6 +58,7 @@
     overflow-x: hidden;
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
+    scroll-snap-points-y: repeat(100vh);
   }
 
   /* ── HERO ── */
@@ -68,8 +73,9 @@
     overflow: hidden;
     padding: 40px 20px;
     text-align: center;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     scroll-snap-stop: always;
+    width: 100%;
   }
 
   .hero::before {
@@ -228,8 +234,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     scroll-snap-stop: always;
+    width: 100%;
   }
 
   .chapter-tag {
@@ -478,8 +485,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     scroll-snap-stop: always;
+    width: 100%;
   }
   footer .logo {
     font-family: 'Playfair Display', serif;
@@ -757,13 +765,15 @@
   <div class="badge">Official Launch Ceremony · Coimbatore · 2026</div>
 
   <h1 class="hero-title">COIMBATORE</h1>
-  <p class="hero-sub">A Coffee Table Book & Documentary Film — A City Unveiled</p>
+  <p class="hero-sub">A Coffee Table Book & Documentary Film </p>
+  <p class="hero-sub">— A City Unveiled</p>
+
 
   <div class="hero-divider"></div>
 
   <p class="hero-desc">
-    An evening that began as a mystery dinner turned into witnessing history — 
-    the official launch of Coimbatore's most beautiful tribute to itself.
+    An evening that began as a mystery dinner turned into witnessing history — the official launch of Coimbatore's most beautiful tribute to itself. A moment of pride and memory, shared through my own eyes.  
+— Ilanthalir S
   </p>
 
   <div class="scroll-hint">SCROLL TO READ</div>
@@ -847,7 +857,7 @@
 
 
 <!-- ACTUAL PHOTO -->
-<section style="min-height: 100vh; padding-top: 0; padding-bottom: 0; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: start; scroll-snap-stop: always;">
+<section style="min-height: 100vh; padding-top: 0; padding-bottom: 0; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: center; scroll-snap-stop: always; width: 100%;">
   <img src="launch_photo.jpg"
        alt="With Thiru. Pavankumar G. Giriyappanavar IAS — District Collector, Coimbatore — Official Launch Night"
        style="width:100%; border-radius:12px; border:1px solid rgba(201,168,76,0.3); display:block;" />
@@ -1072,7 +1082,7 @@
 </section>
 
 <!-- HASHTAGS -->
-<section style="min-height: 100vh; padding-top: 20px; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: start; scroll-snap-stop: always;">
+<section style="min-height: 100vh; padding-top: 20px; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: center; scroll-snap-stop: always; width: 100%;">
   <div class="separator">✦ ✦ ✦</div>
 
   <div class="chapter-tag">Share This Story</div>
@@ -1103,7 +1113,7 @@
 
 
 <!-- ENGAGEMENT SECTION -->
-<section id="engagement" style="min-height: 100vh; max-width: 860px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: start; scroll-snap-stop: always;">
+<section id="engagement" style="min-height: 100vh; max-width: 860px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: center; scroll-snap-stop: always; width: 100%;">
   <div class="chapter-tag">Engagement</div>
   <h2>Share Your Thoughts</h2>
   <div id="stats" style="margin: 20px 0; font-family: 'Space Mono', monospace; font-size: 14px; color: var(--gold);">
@@ -1211,43 +1221,114 @@
     });
   </script>
 
-  <!-- Scroll Animation for Sections with Directional Slide -->
+  <!-- Scroll Animation for Sections with Directional Slide & Smart Snapping -->
   <script>
     let lastScrollY = 0;
     let scrollDirection = 'down';
+    let isSnapping = false;
+    let lastSnappedIndex = -1;
 
     window.addEventListener('scroll', () => {
       const currentScrollY = window.scrollY;
       scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
       lastScrollY = currentScrollY;
+      
+      // Trigger smart snapping
+      handleSmartSnap();
     });
 
+    // Get all scrollable sections
+    const sections = document.querySelectorAll('section, .hero, footer');
+    const sectionHeights = Array.from(sections).map(s => s.offsetHeight);
+    const sectionOffsets = [];
+    let cumulativeOffset = 0;
+    
+    Array.from(sections).forEach((section, index) => {
+      sectionOffsets.push(cumulativeOffset);
+      cumulativeOffset += sectionHeights[index];
+    });
+
+    function handleSmartSnap() {
+      if (isSnapping) return;
+      
+      const viewportCenter = window.innerHeight / 2;
+      const scrollPosition = window.scrollY + viewportCenter;
+      
+      // Find which section is closest to viewport center
+      let closestIndex = 0;
+      let minDistance = Math.abs(scrollPosition - (sectionOffsets[0] + sectionHeights[0] / 2));
+      
+      for (let i = 1; i < sectionOffsets.length; i++) {
+        const sectionCenter = sectionOffsets[i] + sectionHeights[i] / 2;
+        const distance = Math.abs(scrollPosition - sectionCenter);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = i;
+        }
+      }
+      
+      // Snap to section if we've scrolled past a threshold
+      if (closestIndex !== lastSnappedIndex && minDistance > 100) {
+        lastSnappedIndex = closestIndex;
+        snapToSection(closestIndex);
+      }
+    }
+
+    function snapToSection(index) {
+      isSnapping = true;
+      const targetScroll = sectionOffsets[index];
+      
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth'
+      });
+      
+      setTimeout(() => {
+        isSnapping = false;
+      }, 1000);
+    }
+
+    // Intersection Observer for animations
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.3,
+      rootMargin: '0px'
     };
 
     const observer = new IntersectionObserver(function(entries) {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const animationClass = scrollDirection === 'down' ? 'animate-slide-right' : 'animate-slide-left';
-          entry.target.classList.add(animationClass);
-          observer.unobserve(entry.target);
+          if (!entry.target.classList.contains('animated')) {
+            entry.target.classList.add(animationClass, 'animated');
+          }
         }
       });
     }, observerOptions);
 
     // Apply observer to all sections
-    document.querySelectorAll('section').forEach(section => {
+    document.querySelectorAll('section, .hero, footer').forEach(section => {
       section.style.opacity = '0';
       observer.observe(section);
     });
 
     // Re-add opacity when animation completes
-    document.querySelectorAll('section').forEach(section => {
+    document.querySelectorAll('section, .hero, footer').forEach(section => {
       section.addEventListener('animationend', function() {
         section.style.opacity = '1';
       });
+    });
+
+    // Keyboard navigation for chapters
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIndex = Math.min(lastSnappedIndex + 1, sections.length - 1);
+        snapToSection(nextIndex);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIndex = Math.max(lastSnappedIndex - 1, 0);
+        snapToSection(prevIndex);
+      }
     });
   </script>
 </section>
