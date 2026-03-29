@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coimbatore — The City That Breathes Gold</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BR76PWNRMB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BR76PWNRMB');
+</script>
+<script type="module">
+  // Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCn90V4Qvi6ObN7d7MZptWyGKapWCPgKmk",
+    authDomain: "ilan-a93fb.firebaseapp.com",
+    projectId: "ilan-a93fb",
+    storageBucket: "ilan-a93fb.firebasestorage.app",
+    messagingSenderId: "722913316783",
+    appId: "1:722913316783:web:8dd6a816b7c8bad147695a",
+    measurementId: "G-K8GTEXNJP0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  window.db = db;
+</script>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --deep-gold: #A0732A;
+    --cream: #F8F2E6;
+    --ink: #1A1208;
+    --rust: #8B3A1A;
+    --sage: #4A6741;
+    --light-gold: #EDD98A;
+    --parchment: #F2E8D0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: radial-gradient(ellipse at 60% 40%, #2A1E08 0%, #0D0A04 70%);
+    overflow: hidden;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.04) 60px, rgba(201,168,76,0.04) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.04) 60px, rgba(201,168,76,0.04) 61px);
+  }
+
+  .mandala {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    opacity: 0.06;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: slowspin 60s linear infinite;
+  }
+
+  @keyframes slowspin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+  .badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 8px 20px;
+    margin-bottom: 32px;
+    animation: fadein 1s ease forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 10vw, 120px);
+    font-weight: 900;
+    line-height: 0.9;
+    background: linear-gradient(135deg, var(--light-gold) 0%, var(--gold) 40%, var(--cream) 70%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadein 1.2s ease 0.2s both;
+    letter-spacing: -2px;
+  }
+
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 3vw, 28px);
+    color: #ffffff;
+    font-weight: 700;
+    margin-top: 16px;
+    animation: fadein 1.2s ease 0.4s both;
+  }
+
+  .hero-divider {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 32px auto;
+    animation: expand 1.5s ease 0.6s both;
+  }
+
+  @keyframes expand { from { width: 0; opacity: 0; } to { width: 120px; opacity: 1; } }
+
+  .hero-desc {
+    max-width: 600px;
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 1.8;
+    color: rgba(248,242,230,0.75);
+    animation: fadein 1.2s ease 0.8s both;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(201,168,76,0.5);
+    animation: bounce 2s ease infinite;
+  }
+  .scroll-hint::after {
+    content: '↓';
+    font-size: 18px;
+    color: var(--gold);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  @keyframes fadein { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  @keyframes slideup {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  section.animate-slide {
+    animation: slideup 0.8s ease forwards;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    position: relative;
+  }
+
+  .chapter-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-tag::before, .chapter-tag::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,168,76,0.3);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+
+  h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  p {
+    font-size: clamp(16px, 2vw, 20px);
+    line-height: 1.9;
+    color: rgba(248,242,230,0.82);
+    margin-bottom: 20px;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--gold);
+    padding: 20px 32px;
+    margin: 48px 0;
+    background: rgba(201,168,76,0.06);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(20px, 3vw, 28px);
+    line-height: 1.5;
+    color: var(--light-gold);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* ── ADVENTURE BOX ── */
+  .adventure-box {
+    background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(139,58,26,0.12));
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 12px;
+    padding: 40px;
+    margin: 48px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .adventure-box::before {
+    content: '🧭';
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    font-size: 60px;
+    opacity: 0.15;
+  }
+  .adventure-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  /* ── COLLECTOR CARD ── */
+  .collector-card {
+    background: linear-gradient(160deg, #1E1508, #2A1D0A);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    margin: 48px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .collector-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--rust), var(--gold), var(--rust));
+  }
+  .collector-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--deep-gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    flex-shrink: 0;
+    border: 2px solid rgba(201,168,76,0.5);
+  }
+  .collector-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .collector-info .role {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .collector-info p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(248,242,230,0.7);
+    margin: 0;
+  }
+
+  /* ── PHOTO PLACEHOLDER ── */
+  .photo-slot {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #1A1208, #2A1E08);
+    border: 1px dashed rgba(201,168,76,0.3);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 32px 0;
+    gap: 12px;
+    color: rgba(201,168,76,0.5);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+  .photo-slot .icon { font-size: 36px; opacity: 0.4; }
+
+  /* ── HASHTAG CLOUD ── */
+  .hashtag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 40px 0;
+  }
+  .hashtag-cloud span {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 50px;
+    padding: 6px 16px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .hashtag-cloud span:hover {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--gold);
+  }
+
+  /* ── TEAM STRIP ── */
+  .team-strip {
+    background: rgba(201,168,76,0.05);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 40px;
+    margin: 48px -24px;
+    text-align: center;
+  }
+  .team-strip h3 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .team-strip p {
+    font-size: 15px;
+    color: rgba(248,242,230,0.6);
+    margin-bottom: 24px;
+  }
+  .team-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .team-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--cream);
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+  }
+
+  /* ── ALERT CTA ── */
+  .alert-cta {
+    background: linear-gradient(135deg, rgba(139,58,26,0.2), rgba(201,168,76,0.1));
+    border: 1px solid rgba(139,58,26,0.5);
+    border-radius: 12px;
+    padding: 32px 40px;
+    margin: 48px 0;
+    text-align: center;
+  }
+  .alert-cta .alert-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .alert-cta h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+  .alert-cta p { font-size: 16px; margin: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 60px 24px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    background: #0A0700;
+  }
+  footer .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    background: linear-gradient(to right, var(--gold), var(--cream));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+  footer p {
+    font-size: 14px;
+    color: rgba(248,242,230,0.4);
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+  /* ── AUTHOR CARD ── */
+  .author-card {
+    background: linear-gradient(160deg, #1A1208, #221908);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 16px;
+    padding: 36px 40px;
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    margin: 56px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .author-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--gold), var(--rust), var(--gold));
+  }
+  .author-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+    flex-shrink: 0;
+  }
+  .author-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .author-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+  }
+  .author-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 50px;
+    padding: 4px 12px;
+    text-transform: uppercase;
+  }
+  .author-info p { font-size: 15px; line-height: 1.6; color: rgba(248,242,230,0.65); margin: 0; }
+  .author-info a {
+    color: var(--gold);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .author-info a:hover { text-decoration: underline; }
+
+  /* ── CREW GRID ── */
+  .crew-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .crew-item {
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .crew-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .crew-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+
+  .separator {
+    text-align: center;
+    color: var(--gold);
+    font-size: 24px;
+    letter-spacing: 12px;
+    margin: 40px 0;
+    opacity: 0.4;
+  }
+
+  /* ── PRINT / LINKEDIN note ── */
+  .linkedin-note {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(201,168,76,0.4);
+    text-align: center;
+    padding: 12px;
+  }
+
+  /* ── GALLERY ── */
+  .gallery {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px 0;
+    margin: 40px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) rgba(201,168,76,0.1);
+  }
+  .gallery::-webkit-scrollbar {
+    height: 6px;
+  }
+  .gallery::-webkit-scrollbar-track {
+    background: rgba(201,168,76,0.1);
+  }
+  .gallery::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 3px;
+  }
+  .gallery-item {
+    display: inline-block;
+    width: 300px;
+    height: 200px;
+    margin-right: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1A1208, #2A1E08);
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+  .gallery-item img, .gallery-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── YOUTUBE EMBED ── */
+  .youtube-embed {
+    position: relative;
+    width: 560px;
+    height: 315px;
+    margin: 40px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+  .youtube-embed img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .youtube-embed .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .youtube-embed .play-button:hover {
+    background: rgba(0,0,0,0.9);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  .youtube-embed .play-button::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 20px solid var(--gold);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    margin-left: 4px;
+  }
+  .youtube-embed a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  @media (max-width: 600px) {
+    .collector-card { flex-direction: column; }
+    .collector-avatar { width: 60px; height: 60px; font-size: 24px; }
+    .team-strip { margin: 48px -12px; padding: 32px 20px; }
+  }
+
+  @media (max-width: 768px) {
+    section { padding: 40px 16px; }
+    .hero { padding: 20px 10px; }
+    .hero-title { font-size: clamp(36px, 8vw, 60px); }
+    .hero-sub { font-size: clamp(16px, 2.5vw, 22px); }
+    .hero-desc { font-size: clamp(13px, 1.8vw, 16px); }
+    h2 { font-size: clamp(28px, 4.5vw, 42px); }
+    p { font-size: clamp(14px, 1.8vw, 18px); }
+    .pull-quote { font-size: clamp(16px, 2.5vw, 22px); }
+    .chapter-tag { font-size: 8px; }
+    .share-buttons { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .author-card { flex-direction: column; text-align: center; }
+    .crew-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 36px 14px; }
+    .hero { padding: 15px 8px; }
+    .hero-title { font-size: clamp(32px, 7vw, 50px); }
+    .hero-sub { font-size: clamp(14px, 2.2vw, 20px); }
+    .hero-desc { font-size: clamp(12px, 1.6vw, 15px); }
+    h2 { font-size: clamp(24px, 4vw, 36px); }
+    p { font-size: clamp(13px, 1.6vw, 16px); }
+    .pull-quote { font-size: clamp(14px, 2.2vw, 20px); padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <svg class="mandala" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="95" stroke="white" stroke-width="0.5"/>
+    <circle cx="100" cy="100" r="75" stroke="white" stroke-width="0.5"/>
+    <circle cx="100" cy="100" r="55" stroke="white" stroke-width="0.5"/>
+    <circle cx="100" cy="100" r="35" stroke="white" stroke-width="0.5"/>
+    <line x1="100" y1="5" x2="100" y2="195" stroke="white" stroke-width="0.5"/>
+    <line x1="5" y1="100" x2="195" y2="100" stroke="white" stroke-width="0.5"/>
+    <line x1="33" y1="33" x2="167" y2="167" stroke="white" stroke-width="0.5"/>
+    <line x1="167" y1="33" x2="33" y2="167" stroke="white" stroke-width="0.5"/>
+    <line x1="5" y1="66" x2="195" y2="134" stroke="white" stroke-width="0.3"/>
+    <line x1="66" y1="5" x2="134" y2="195" stroke="white" stroke-width="0.3"/>
+    <line x1="5" y1="134" x2="195" y2="66" stroke="white" stroke-width="0.3"/>
+    <line x1="134" y1="5" x2="66" y2="195" stroke="white" stroke-width="0.3"/>
+    <polygon points="100,10 115,90 195,100 115,110 100,190 85,110 5,100 85,90" fill="white" opacity="0.5"/>
+  </svg>
+
+  <div class="badge">Official Launch Ceremony · Coimbatore · 2026</div>
+
+  <h1 class="hero-title">COIMBATORE</h1>
+  <p class="hero-sub">A Coffee Table Book & Documentary Film — A City Unveiled</p>
+
+  <div class="hero-divider"></div>
+
+  <p class="hero-desc">
+    An evening that began as a mystery dinner turned into witnessing history — 
+    the official launch of Coimbatore's most beautiful tribute to itself.
+  </p>
+
+  <div class="scroll-hint">SCROLL TO READ</div>
+</div>
+
+<!-- CHAPTER 1: THE ACCIDENT THAT WASN'T -->
+<section>
+  <div class="chapter-tag">Chapter One</div>
+  <h2>The Night I Accidentally <em>Witnessed History</em></h2>
+
+  <p>
+    It started like any ordinary evening at the ALERT NGO office. I had gone there for routine work — 
+    nothing unusual, nothing planned. Then I noticed everyone moving at once, grabbing things, heading out the door.
+  </p>
+
+  <p>
+    "Come with us," they said. So I did. I didn't overthink it.
+  </p>
+
+  <p>
+    I assumed we were heading to dinner. The kind of spontaneous group outing that volunteers fall into on a late evening. 
+    A biryani place, maybe. A chai stall. Something simple.
+  </p>
+
+  <div class="pull-quote">
+    "Halfway there, I casually asked — where exactly are we headed? 
+    The answer hit differently than I expected."
+  </div>
+
+  <p>
+    <strong style="color: var(--light-gold)">PSG Hospital.</strong> Okay, I thought — someone must need help. 
+    Someone's unwell. It's already late. My mind ran through scenarios. 
+    None of them prepared me for what was actually waiting.
+  </p>
+</section>
+
+
+<!-- CHAPTER 2: THE STUNNED MOMENT -->
+<section>
+  <div class="chapter-tag">Chapter Two</div>
+  <h2>The Man, The <em>Moment</em>, The Collector</h2>
+
+  <p>
+    We were going to meet <strong style="color: var(--light-gold)">Thiru. PAVANKUMAR G. GIRIYAPPANAVAR, IAS</strong> — 
+    the District Collector of Coimbatore. At that hour. That night.
+  </p>
+
+  <p>
+    I thought they were joking.
+  </p>
+
+  <p>
+    They weren't.
+  </p>
+
+  <div class="collector-card">
+    <div class="collector-avatar">🏛️</div>
+    <div class="collector-info">
+      <h3>Thiru. Pavankumar G. Giriyappanavar</h3>
+      <div class="role">IAS · 2016 Batch · 184th District Collector, Coimbatore</div>
+      <p>
+        A 2016-batch IAS officer from Karnataka, Pavankumar holds an engineering degree from PES University, 
+        Bengaluru. He cleared UPSC in his first attempt and previously served as Commissioner of 
+        Tiruppur City Municipal Corporation. He assumed charge of Coimbatore on 13 February 2025 — 
+        and immediately got to work making the district proud.
+      </p>
+    </div>
+  </div>
+
+  <p>
+    And here's the most human part of this whole story — we <em>knew</em> the event was in the seminar hall. 
+    We walked past it. Twice. We roamed the corridors, went up, came down, 
+    circled back — completely missing the very room we were looking for.
+  </p>
+
+  <div class="pull-quote">
+    "The place we crossed twice. The hall we searched for everywhere 
+    except exactly where it was. That fumble made the arrival even sweeter."
+  </div>
+</section>
+
+
+<!-- ACTUAL PHOTO -->
+<section style="padding-top: 0; padding-bottom: 0;">
+  <img src="launch_photo.jpg"
+       alt="With Thiru. Pavankumar G. Giriyappanavar IAS — District Collector, Coimbatore — Official Launch Night"
+       style="width:100%; border-radius:12px; border:1px solid rgba(201,168,76,0.3); display:block;" />
+  <p style="text-align:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px; color:rgba(201,168,76,0.5); margin-top:12px;">
+    WITH THIRU. PAVANKUMAR G. GIRIYAPPANAVAR, IAS · DISTRICT COLLECTOR, COIMBATORE · OFFICIAL LAUNCH NIGHT
+  </p>
+</section>
+
+
+<!-- CHAPTER 3: THE BOOK & FILM -->
+<section>
+  <div class="chapter-tag">Chapter Three</div>
+  <h2>A City That <em>Deserved</em> This Tribute</h2>
+
+  <p>
+    The Coimbatore Coffee Table Book and Documentary Film is not just a project. 
+    It is a love letter — meticulously researched, carefully photographed, 
+    and honestly told — to one of South India's most misunderstood and underrated cities.
+  </p>
+
+  <p>
+    At the launch, the honorable guests spoke of Coimbatore with a warmth that you can only feel 
+    when a city has genuinely shaped you. They spoke of its <strong style="color: var(--light-gold)">origin</strong>, 
+    its <strong style="color: var(--light-gold)">identity</strong>, its <strong style="color: var(--light-gold)">people</strong>, 
+    and what makes it quietly beautiful in a way that outsiders sometimes miss entirely.
+  </p>
+
+  <div class="adventure-box">
+    <h3>🎬 What the Documentary Captures</h3>
+    <p>
+      The origin stories. The industries that make Tamil Nadu tick. The green Nilgiris in the backdrop. 
+      The textile looms, the engineering clusters, the colleges that birth dreamers. 
+      The food. The culture. The quiet pride of a city that doesn't need to shout.
+      <br><br>
+      This is Coimbatore — and now the world has a book to prove it.
+    </p>
+  </div>
+</section>
+
+
+<!-- CHAPTER 4: THE FULL CREW -->
+<div class="team-strip">
+  <h3>Sattival — The Backbone</h3>
+  <p><em style="color:rgba(201,168,76,0.7)">Coimbatore: A Journey Through Culture & Landscapes</em></p>
+  <p style="color: rgba(248,242,230,0.5); font-size: 14px; margin-bottom: 28px;">
+    Every frame, every word, every note — someone poured their soul into it. These are the people who made history.
+  </p>
+  <div class="crew-grid" style="max-width:860px; margin:0 auto; text-align:left;">
+    <div class="crew-item">
+      <div class="crew-role">Director & Cinematographer</div>
+      <div class="crew-name">L. Ramachandran</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Editor</div>
+      <div class="crew-name">Arul E. Siddharth</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Script</div>
+      <div class="crew-name">Pradeep Kumar</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Project Organizer</div>
+      <div class="crew-name">Dr. A. Senthil Anna, MSc., PhD.</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Music</div>
+      <div class="crew-name">Ashwin Hemanth</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Research & Development</div>
+      <div class="crew-name">Mohamed Zunaid</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">D.I (Color Grading)</div>
+      <div class="crew-name">Vasanth</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Producer</div>
+      <div class="crew-name">J. Sunitha Ramachandran</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Narrated & Presented By</div>
+      <div class="crew-name">Dr. V. Selva Kumar · Professor & Archaeologist<br>Dr. K. Rajan · Professor & Archaeologist<br>Dr. C. Maheswaran · Director, Tribal Research Centre, Ooty<br>Dr. Ilangovan · Mentor Professor, Bharathiyar University<br>Mr. K. Kalidasan · President, OSAI Environmental Organisation<br>Dr. R. Jegadeesan · Epigraphist, The Vanavarayar Foundation<br>Mr. Rajesh Govindarajulu · Heritage Lover & Columnist, Coimbatore</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Associate Cinematographers</div>
+      <div class="crew-name">Rosario John Victor · Neil Adams · S. Subash Sankar</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Narrator</div>
+      <div class="crew-name">Murali Kumar</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Drone Pilot</div>
+      <div class="crew-name">L. Ramachandran</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">AI</div>
+      <div class="crew-name">Sai Dharshan</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">VFX</div>
+      <div class="crew-name">Thilakesh Pradeesh</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Title Design</div>
+      <div class="crew-name">Mohamed Zunaid</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Script Associate</div>
+      <div class="crew-name">Elango Sampath Kumar</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Production</div>
+      <div class="crew-name">Tharansia Pvt. Ltd.</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Admin</div>
+      <div class="crew-name">G. Srinivasan · Vijaya Balaji Jayaraman</div>
+    </div>
+    <div class="crew-item">
+      <div class="crew-role">Admin Associate</div>
+      <div class="crew-name">Siddarth Manohar · A. Kalaivani</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CHAPTER 5: THE UNEXPECTED ARRIVAL -->
+<section>
+  <div class="chapter-tag">Chapter Five</div>
+  <h2>Sometimes You <em>Just Show Up</em></h2>
+
+  <p>
+    I'm an AI Full Stack Developer by day — building things, breaking things, fixing things. 
+    I also volunteer in my community because I believe showing up matters, 
+    even when you don't know exactly why you're showing up yet.
+  </p>
+
+  <p>
+    That evening proved the point entirely. I went for routine work. 
+    I walked out having witnessed the official launch of something that will outlast all of us.
+  </p>
+
+  <div class="pull-quote">
+    "The city that raised us in silence now speaks in pages and frames — 
+    and the world is finally listening."
+  </div>
+
+  <p>
+    Coimbatore is not just a place on the map. It is a living thing. 
+    And last night, it got the tribute it always deserved.
+  </p>
+
+  <!-- AUTHOR CARD -->
+  <div class="author-card">
+    <img src="ilan.jpeg" class="author-photo" alt="Ilanthalir S" style="object-position: 90% center;" />
+    <div class="author-info">
+      <h3>Ilanthalir S</h3>
+      <div class="author-tags">
+        <span class="author-tag">AI Full Stack Developer</span>
+        <span class="author-tag">Community Volunteer</span>
+        <span class="author-tag">Coimbatore</span>
+      </div>
+      <p>Building with AI. Serving the community. Accidentally witnessing history.</p>
+      <br>
+      <a href="https://www.linkedin.com/in/ilanthalir-s-9a1632201/" target="_blank">🔗 Connect on LinkedIn →</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section>
+  <div class="chapter-tag">Gallery</div>
+  <h2>Memories in <em>Motion</em></h2>
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="asset/collector.jpeg" alt="Collector">
+    </div>
+    <div class="gallery-item">
+      <img src="asset/backbone.jpeg" alt="Collector">
+    </div>
+    <div class="gallery-item">
+      <video controls>
+        <source src="asset/launch_video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="gallery-item">
+      <img src="asset/launch.jpeg" alt="Launch">
+    </div>
+    <div class="gallery-item">
+      <img src="asset/venue.jpeg" alt="Venue">
+    </div>
+    <div class="gallery-item">
+      <img src="asset/launch_photo.jpg" alt="Launch Photo">
+    </div>
+    <div class="gallery-item">
+      <img src="asset/WhatsApp Image 2026-03-13 at 3.11.29 PM.jpeg" alt="Collector">
+    </div><div class="gallery-item">
+      <video controls>
+        <source src="asset/WhatsApp Video 2026-03-13 at 3.11.29 PM.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div><div class="gallery-item">
+      <img src="asset/WhatsApp Image 2026-03-13 at 3.11.30 PM.jpeg" alt="Collector">
+    </div><div class="gallery-item">
+      <img src="asset/WhatsApp Image 2026-03-13 at 3.11.34 PM.jpeg" alt="Collector">
+    </div><div class="gallery-item">
+      <img src="asset/WhatsApp Image 2026-03-13 at 3.11.38 PM.jpeg" alt="Collector">
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO EMBED -->
+<section>
+  <div class="chapter-tag">Featured Video</div>
+  <h2>Watch the <em>Launch Ceremony</em></h2>
+  <div class="youtube-embed">
+    <img src="https://img.youtube.com/vi/sEu4TEmnkfg/maxresdefault.jpg" alt="YouTube Video Thumbnail">
+    <a href="https://youtu.be/sEu4TEmnkfg?si=KwcvWBh5gU-KioVN" target="_blank">
+      <div class="play-button"></div>
+    </a>
+  </div>
+</section>
+
+<!-- HASHTAGS -->
+<section style="padding-top: 20px;">
+  <div class="separator">✦ ✦ ✦</div>
+
+  <div class="chapter-tag">Share This Story</div>
+
+  <div class="hashtag-cloud">
+    <span>#Coimbatore</span>
+    <span>#CoffeTableBook</span>
+    <span>#CoimbatoreDocumentary</span>
+    <span>#PavankumarIAS</span>
+    <span>#DistrictCollectorCoimbatore</span>
+    <span>#CBE</span>
+    <span>#CoimbatorePride</span>
+    <span>#TamilNadu</span>
+    <span>#ALERTVolunteer</span>
+    <span>#CoimbatoreOrigins</span>
+    <span>#OfficialLaunch</span>
+    <span>#GovernanceInAction</span>
+    <span>#CityStories</span>
+    <span>#CoimbatoreCulture</span>
+    <span>#InspiredByService</span>
+    <span>#DocumentaryFilm</span>
+    <span>#VolunteeringLife</span>
+    <span>#IASInspiration</span>
+    <span>#MadeInCoimbatore</span>
+    <span>#LinkedInStory</span>
+  </div>
+</section>
+
+
+<!-- ENGAGEMENT SECTION -->
+<section id="engagement" style="max-width: 860px; margin: 0 auto; padding: 80px 24px;">
+  <div class="chapter-tag">Engagement</div>
+  <h2>Share Your Thoughts</h2>
+  <div id="stats" style="margin: 20px 0; font-family: 'Space Mono', monospace; font-size: 14px; color: var(--gold);">
+    <p>Views: <span id="view-count">0</span></p>
+    <p>Likes: <span id="like-count">0</span></p>
+    <button id="like-btn" style="background: var(--gold); color: var(--ink); border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 12px;">👍 Like</button>
+  </div>
+  <div class="share-buttons" style="margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(window.location.href) target="_blank" style="background: #1877f2; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 12px;">Share on Facebook</a>
+    <a href="https://twitter.com/intent/tweet?url=" + encodeURIComponent(window.location.href) + "&text=Check out this story about Coimbatore!" target="_blank" style="background: #1da1f2; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 12px;">Share on Twitter</a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(window.location.href) target="_blank" style="background: #0077b5; color: white; padding: 8px 12px; border-radius: 4px; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 12px;">Share on LinkedIn</a>
+  </div>
+  <div id="comments" style="margin-top: 40px;">
+    <h3 style="color: var(--cream); font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 20px;">Comments</h3>
+    <div id="comment-form" style="margin-bottom: 20px;">
+      <input type="text" id="name" placeholder="Name" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid var(--gold); background: var(--ink); color: var(--cream); font-family: 'Space Mono', monospace;">
+      <textarea id="comment" placeholder="Comment" required style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid var(--gold); background: var(--ink); color: var(--cream); font-family: 'Space Mono', monospace; min-height: 80px;"></textarea>
+      <button id="submit-comment" style="background: var(--gold); color: var(--ink); border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-family: 'Space Mono', monospace;">Submit Comment</button>
+    </div>
+    <div id="comment-list"></div>
+  </div>
+  <script>
+    // Comments with Firebase
+    const commentForm = document.getElementById('comment-form');
+    const nameInput = document.getElementById('name');
+    const commentInput = document.getElementById('comment');
+    const submitBtn = document.getElementById('submit-comment');
+    const commentList = document.getElementById('comment-list');
+
+    // Load comments
+    async function loadComments() {
+      try {
+        const q = query(collection(window.db, 'comments'), orderBy('timestamp', 'desc'));
+        const querySnapshot = await getDocs(q);
+        commentList.innerHTML = '';
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const div = document.createElement('div');
+          div.style.marginBottom = '20px';
+          div.style.padding = '10px';
+          div.style.border = '1px solid rgba(201,168,76,0.3)';
+          div.style.borderRadius = '8px';
+          div.innerHTML = `<strong style="color: var(--gold);">${data.name}</strong>: ${data.comment} <small style="color: rgba(248,242,230,0.5);">${new Date(data.timestamp.seconds * 1000).toLocaleString()}</small>`;
+          commentList.appendChild(div);
+        });
+      } catch (error) {
+        console.error('Error loading comments:', error);
+      }
+    }
+
+    loadComments();
+
+    // Submit comment
+    submitBtn.addEventListener('click', async () => {
+      const name = nameInput.value.trim();
+      const comment = commentInput.value.trim();
+      if (name && comment) {
+        try {
+          await addDoc(collection(window.db, 'comments'), {
+            name,
+            comment,
+            timestamp: new Date()
+          });
+          nameInput.value = '';
+          commentInput.value = '';
+          loadComments();
+        } catch (error) {
+          console.error('Error submitting comment:', error);
+          alert('Error submitting comment. Please try again.');
+        }
+      } else {
+        alert('Please fill in both name and comment.');
+      }
+    });
+  </script>
+  <script>
+    // Counters using CountAPI (free, IP-based limiting)
+    async function updateCounter(type) {
+      try {
+        const endpoint = type === 'view' ? 'unique' : 'unique';  // Both unique for IP limit
+        const response = await fetch(`https://api.countapi.xyz/${endpoint}/coimbatore/${type}s`);
+        const data = await response.json();
+        document.getElementById(`${type}-count`).textContent = data.value;
+      } catch (error) {
+        console.error('Error updating counter:', error);
+        // Fallback to localStorage if API fails
+        let count = localStorage.getItem(`${type}s`) || 0;
+        if (type === 'view') {
+          count = parseInt(count) + 1;
+          localStorage.setItem(`${type}s`, count);
+        }
+        document.getElementById(`${type}-count`).textContent = count;
+      }
+    }
+
+    // Update views on load
+    updateCounter('view');
+
+    // Update likes display initially
+    updateCounter('like');
+
+    // Like button
+    document.getElementById('like-btn').addEventListener('click', () => {
+      updateCounter('like');
+    });
+  </script>
+
+  <!-- Scroll Animation for Sections -->
+  <script>
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-slide');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Apply observer to all sections
+    document.querySelectorAll('section').forEach(section => {
+      section.style.opacity = '0';
+      observer.observe(section);
+    });
+
+    // Re-add opacity when animation completes
+    document.querySelectorAll('section').forEach(section => {
+      section.addEventListener('animationend', function() {
+        section.style.opacity = '1';
+      });
+    });
+  </script>
+</section>
+
+
+<!-- FOOTER / LINKEDIN CLOSING -->
+<footer>
+  <div class="logo">COIMBATORE</div>
+  <p>📖 Coffee Table Book &nbsp;·&nbsp; 🎬 Documentary Film &nbsp;·&nbsp; 🏛️ Official Launch 2026</p>
+  <p>Hosted by Thiru. Pavankumar G. Giriyappanavar, IAS · District Collector, Coimbatore</p>
+  <p style="margin-top: 16px; font-style: italic; color: rgba(248,242,230,0.35);">
+    Written with pride by Ilanthalir S — AI Full Stack Developer & Community Volunteer, Coimbatore
+  </p>
+
+  <div class="linkedin-note" style="margin-top: 20px;">
+    <a href="https://www.linkedin.com/in/ilanthalir-s-9a1632201/" target="_blank" style="color:rgba(201,168,76,0.5); text-decoration:none; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:2px;">
+      🔗 LINKEDIN.COM/IN/ILANTHALIR-S-9A1632201
+    </a>
+  </div>
+</footer>
+
+
+
+</body>
+</html>
