@@ -49,6 +49,8 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -59,6 +61,8 @@
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
     scroll-snap-points-y: repeat(100vh);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* ── HERO ── */
@@ -76,6 +80,9 @@
     scroll-snap-align: center;
     scroll-snap-stop: always;
     width: 100%;
+    contain: layout style paint;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .hero::before {
@@ -198,10 +205,12 @@
     from {
       opacity: 0;
       transform: translateX(100px);
+      backface-visibility: hidden;
     }
     to {
       opacity: 1;
       transform: translateX(0);
+      backface-visibility: hidden;
     }
   }
 
@@ -209,19 +218,23 @@
     from {
       opacity: 0;
       transform: translateX(-100px);
+      backface-visibility: hidden;
     }
     to {
       opacity: 1;
       transform: translateX(0);
+      backface-visibility: hidden;
     }
   }
 
   section.animate-slide-right {
     animation: slideFromRight 0.8s ease forwards;
+    will-change: transform, opacity;
   }
 
   section.animate-slide-left {
     animation: slideFromLeft 0.8s ease forwards;
+    will-change: transform, opacity;
   }
 
   /* ── SECTIONS ── */
@@ -237,6 +250,9 @@
     scroll-snap-align: center;
     scroll-snap-stop: always;
     width: 100%;
+    contain: layout style paint;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .chapter-tag {
@@ -488,6 +504,9 @@
     scroll-snap-align: center;
     scroll-snap-stop: always;
     width: 100%;
+    contain: layout style paint;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   footer .logo {
     font-family: 'Playfair Display', serif;
@@ -1221,34 +1240,42 @@
     });
   </script>
 
-  <!-- Scroll Animation for Sections with Directional Slide & Smart Snapping -->
+  <!-- Scroll Animation for Sections with Directional Slide & Smart Snapping (Optimized) -->
   <script>
     let lastScrollY = 0;
     let scrollDirection = 'down';
     let isSnapping = false;
     let lastSnappedIndex = -1;
+    let ticking = false;
+    let snapTimeout = null;
 
+    // Cache DOM queries
+    const sections = Array.from(document.querySelectorAll('section, .hero, footer'));
+    const sectionCount = sections.length;
+    const sectionHeights = sections.map(s => s.offsetHeight);
+    const sectionOffsets = [];
+    let cumulativeOffset = 0;
+    
+    sections.forEach((section, index) => {
+      sectionOffsets.push(cumulativeOffset);
+      cumulativeOffset += sectionHeights[index];
+    });
+
+    // Throttled scroll handler using requestAnimationFrame
     window.addEventListener('scroll', () => {
       const currentScrollY = window.scrollY;
       scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
       lastScrollY = currentScrollY;
       
-      // Trigger smart snapping
-      handleSmartSnap();
-    });
-
-    // Get all scrollable sections
-    const sections = document.querySelectorAll('section, .hero, footer');
-    const sectionHeights = Array.from(sections).map(s => s.offsetHeight);
-    const sectionOffsets = [];
-    let cumulativeOffset = 0;
-    
-    Array.from(sections).forEach((section, index) => {
-      sectionOffsets.push(cumulativeOffset);
-      cumulativeOffset += sectionHeights[index];
-    });
+      if (!ticking) {
+        requestAnimationFrame(handleSmartSnap);
+        ticking = true;
+      }
+    }, { passive: true });
 
     function handleSmartSnap() {
+      ticking = false;
+      
       if (isSnapping) return;
       
       const viewportCenter = window.innerHeight / 2;
@@ -1258,7 +1285,7 @@
       let closestIndex = 0;
       let minDistance = Math.abs(scrollPosition - (sectionOffsets[0] + sectionHeights[0] / 2));
       
-      for (let i = 1; i < sectionOffsets.length; i++) {
+      for (let i = 1; i < sectionCount; i++) {
         const sectionCenter = sectionOffsets[i] + sectionHeights[i] / 2;
         const distance = Math.abs(scrollPosition - sectionCenter);
         if (distance < minDistance) {
@@ -1268,8 +1295,9 @@
       }
       
       // Snap to section if we've scrolled past a threshold
-      if (closestIndex !== lastSnappedIndex && minDistance > 100) {
+      if (closestIndex !== lastSnappedIndex && minDistance > 150) {
         lastSnappedIndex = closestIndex;
+        clearTimeout(snapTimeout);
         snapToSection(closestIndex);
       }
     }
@@ -1283,14 +1311,14 @@
         behavior: 'smooth'
       });
       
-      setTimeout(() => {
+      snapTimeout = setTimeout(() => {
         isSnapping = false;
-      }, 1000);
+      }, 800);
     }
 
     // Intersection Observer for animations
     const observerOptions = {
-      threshold: 0.3,
+      threshold: 0.35,
       rootMargin: '0px'
     };
 
@@ -1301,35 +1329,36 @@
           if (!entry.target.classList.contains('animated')) {
             entry.target.classList.add(animationClass, 'animated');
           }
+          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
     // Apply observer to all sections
-    document.querySelectorAll('section, .hero, footer').forEach(section => {
+    sections.forEach(section => {
       section.style.opacity = '0';
       observer.observe(section);
     });
 
     // Re-add opacity when animation completes
-    document.querySelectorAll('section, .hero, footer').forEach(section => {
+    sections.forEach(section => {
       section.addEventListener('animationend', function() {
         section.style.opacity = '1';
-      });
+      }, { once: false, passive: true });
     });
 
-    // Keyboard navigation for chapters
+    // Keyboard navigation for chapters (optimized)
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
-        const nextIndex = Math.min(lastSnappedIndex + 1, sections.length - 1);
+        const nextIndex = Math.min(lastSnappedIndex + 1, sectionCount - 1);
         snapToSection(nextIndex);
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         const prevIndex = Math.max(lastSnappedIndex - 1, 0);
         snapToSection(prevIndex);
       }
-    });
+    }, { passive: false });
   </script>
 </section>
 
