@@ -52,6 +52,8 @@
     font-family: 'Cormorant Garamond', serif;
     color: var(--cream);
     overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
   }
 
   /* ── HERO ── */
@@ -66,6 +68,8 @@
     overflow: hidden;
     padding: 40px 20px;
     text-align: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .hero::before {
@@ -139,7 +143,7 @@
 
   .hero-desc {
     max-width: 600px;
-    font-size: clamp(15px, 2vw, 18px);
+    font-size: clamp(18px, 2.5vw, 22px);
     line-height: 1.8;
     color: rgba(248,242,230,0.75);
     animation: fadein 1.2s ease 0.8s both;
@@ -216,10 +220,16 @@
 
   /* ── SECTIONS ── */
   section {
+    min-height: 100vh;
     max-width: 860px;
     margin: 0 auto;
     padding: 80px 24px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .chapter-tag {
@@ -242,7 +252,7 @@
 
   h2 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 5vw, 56px);
+    font-size: clamp(36px, 6vw, 64px);
     font-weight: 700;
     line-height: 1.1;
     color: var(--cream);
@@ -255,7 +265,7 @@
   }
 
   p {
-    font-size: clamp(16px, 2vw, 20px);
+    font-size: clamp(18px, 2.2vw, 22px);
     line-height: 1.9;
     color: rgba(248,242,230,0.82);
     margin-bottom: 20px;
@@ -269,7 +279,7 @@
     background: rgba(201,168,76,0.06);
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: clamp(16px, 3vw, 28px);
+    font-size: clamp(19px, 3.2vw, 32px);
     line-height: 1.5;
     color: var(--light-gold);
     border-radius: 0 8px 8px 0;
@@ -295,12 +305,12 @@
   }
   .adventure-box h3 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(20px, 4vw, 26px);
+    font-size: clamp(23px, 4.5vw, 30px);
     color: var(--gold);
     margin-bottom: 16px;
   }
   .adventure-box p {
-    font-size: clamp(14px, 2vw, 18px);
+    font-size: clamp(16px, 2.2vw, 20px);
   }
 
   /* ── COLLECTOR CARD ── */
@@ -337,20 +347,20 @@
   }
   .collector-info h3 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(18px, 3.5vw, 22px);
+    font-size: clamp(21px, 4vw, 26px);
     color: var(--cream);
     margin-bottom: 4px;
   }
   .collector-info .role {
     font-family: 'Space Mono', monospace;
-    font-size: 9px;
+    font-size: 10px;
     letter-spacing: 2px;
     color: var(--gold);
     text-transform: uppercase;
     margin-bottom: 12px;
   }
   .collector-info p {
-    font-size: clamp(13px, 2vw, 15px);
+    font-size: clamp(15px, 2.2vw, 18px);
     line-height: 1.7;
     color: rgba(248,242,230,0.7);
     margin: 0;
@@ -371,7 +381,7 @@
     gap: 12px;
     color: rgba(201,168,76,0.5);
     font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 2px;
   }
   .photo-slot .icon { font-size: 36px; opacity: 0.4; }
@@ -385,7 +395,7 @@
   }
   .hashtag-cloud span {
     font-family: 'Space Mono', monospace;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--gold);
     border: 1px solid rgba(201,168,76,0.35);
     border-radius: 50px;
@@ -410,12 +420,12 @@
   .team-strip h3 {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: clamp(24px, 4vw, 32px);
+    font-size: clamp(28px, 4.5vw, 38px);
     color: var(--gold);
     margin-bottom: 8px;
   }
   .team-strip p {
-    font-size: clamp(13px, 2vw, 15px);
+    font-size: clamp(15px, 2.2vw, 18px);
     color: rgba(248,242,230,0.6);
     margin-bottom: 24px;
   }
@@ -427,7 +437,7 @@
   }
   .team-name {
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
+    font-size: 20px;
     color: var(--cream);
     border-bottom: 1px solid var(--gold);
     padding-bottom: 2px;
@@ -444,7 +454,7 @@
   }
   .alert-cta .alert-label {
     font-family: 'Space Mono', monospace;
-    font-size: 9px;
+    font-size: 10px;
     letter-spacing: 4px;
     color: var(--rust);
     text-transform: uppercase;
@@ -452,11 +462,11 @@
   }
   .alert-cta h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 26px;
+    font-size: 30px;
     color: var(--cream);
     margin-bottom: 12px;
   }
-  .alert-cta p { font-size: 16px; margin: 0; }
+  .alert-cta p { font-size: 18px; margin: 0; }
 
   /* ── FOOTER ── */
   footer {
@@ -464,6 +474,12 @@
     padding: 60px 24px;
     border-top: 1px solid rgba(201,168,76,0.15);
     background: #0A0700;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
   footer .logo {
     font-family: 'Playfair Display', serif;
@@ -475,7 +491,7 @@
     margin-bottom: 16px;
   }
   footer p {
-    font-size: 14px;
+    font-size: 16px;
     color: rgba(248,242,230,0.4);
     margin-bottom: 8px;
     line-height: 1.6;
@@ -510,7 +526,7 @@
   }
   .author-info h3 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(18px, 3.5vw, 22px);
+    font-size: clamp(21px, 4vw, 26px);
     color: var(--cream);
     margin-bottom: 4px;
   }
@@ -522,7 +538,7 @@
   }
   .author-tag {
     font-family: 'Space Mono', monospace;
-    font-size: 8px;
+    font-size: 9px;
     letter-spacing: 1.5px;
     color: var(--gold);
     border: 1px solid rgba(201,168,76,0.4);
@@ -530,12 +546,12 @@
     padding: 4px 12px;
     text-transform: uppercase;
   }
-  .author-info p { font-size: clamp(13px, 2vw, 15px); line-height: 1.6; color: rgba(248,242,230,0.65); margin: 0; }
+  .author-info p { font-size: clamp(15px, 2.2vw, 18px); line-height: 1.6; color: rgba(248,242,230,0.65); margin: 0; }
   .author-info a {
     color: var(--gold);
     text-decoration: none;
     font-family: 'Space Mono', monospace;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 1px;
   }
   .author-info a:hover { text-decoration: underline; }
@@ -555,7 +571,7 @@
   }
   .crew-role {
     font-family: 'Space Mono', monospace;
-    font-size: 9px;
+    font-size: 10px;
     letter-spacing: 2px;
     color: var(--gold);
     text-transform: uppercase;
@@ -563,7 +579,7 @@
   }
   .crew-name {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(14px, 2.5vw, 16px);
+    font-size: clamp(16px, 2.8vw, 18px);
     color: var(--cream);
     line-height: 1.4;
   }
@@ -648,44 +664,73 @@
   }
 
   @media (max-width: 768px) {
-    section { padding: 40px 16px; }
-    .hero { padding: 20px 10px; }
+    section { 
+      padding: 40px 16px;
+      min-height: 100vh;
+    }
+    .hero { 
+      padding: 20px 10px;
+      min-height: 100vh;
+    }
+    footer {
+      min-height: 100vh;
+    }
     .hero-title { font-size: clamp(36px, 8vw, 60px); }
     .hero-sub { font-size: clamp(16px, 2.5vw, 22px); }
-    .hero-desc { font-size: clamp(13px, 1.8vw, 16px); }
-    h2 { font-size: clamp(28px, 4.5vw, 42px); }
-    p { font-size: clamp(14px, 1.8vw, 18px); }
-    .pull-quote { font-size: clamp(15px, 2.5vw, 20px); padding: 18px 24px; }
+    .hero-desc { font-size: clamp(17px, 2.2vw, 20px); }
+    h2 { font-size: clamp(32px, 5.5vw, 52px); }
+    p { font-size: clamp(16px, 2vw, 20px); }
+    .pull-quote { font-size: clamp(17px, 2.8vw, 26px); padding: 18px 24px; }
     .adventure-box { padding: 28px 24px; }
-    .adventure-box p { font-size: clamp(13px, 1.8vw, 16px); }
+    .adventure-box h3 { font-size: clamp(20px, 4vw, 26px); }
+    .adventure-box p { font-size: clamp(15px, 2vw, 18px); }
     .chapter-tag { font-size: 8px; }
-    .team-strip h3 { font-size: clamp(22px, 3.5vw, 28px); }
-    .hashtag-cloud span { font-size: 11px; }
+    .collector-info h3 { font-size: clamp(19px, 3.5vw, 24px); }
+    .collector-info p { font-size: clamp(14px, 2vw, 16px); }
+    .team-strip h3 { font-size: clamp(25px, 4vw, 34px); }
+    .team-strip p { font-size: clamp(14px, 2vw, 17px); }
+    .team-name { font-size: 18px; }
+    .author-info h3 { font-size: clamp(19px, 3.5vw, 24px); }
+    .author-info p { font-size: clamp(14px, 2vw, 16px); }
+    .crew-role { font-size: 9px; }
+    .crew-name { font-size: clamp(15px, 2.5vw, 17px); }
+    .hashtag-cloud span { font-size: 12px; }
     .share-buttons { flex-direction: column; align-items: flex-start; gap: 8px; }
     .author-card { flex-direction: column; text-align: center; }
     .crew-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 600px) {
-    section { padding: 36px 14px; }
-    .hero { padding: 15px 8px; }
+    section { 
+      padding: 36px 14px;
+      min-height: 100vh;
+    }
+    .hero { 
+      padding: 15px 8px;
+      min-height: 100vh;
+    }
+    footer {
+      min-height: 100vh;
+    }
     .hero-title { font-size: clamp(32px, 7vw, 50px); }
     .hero-sub { font-size: clamp(14px, 2.2vw, 20px); }
-    .hero-desc { font-size: clamp(12px, 1.6vw, 15px); }
-    h2 { font-size: clamp(24px, 4vw, 36px); }
-    p { font-size: clamp(13px, 1.6vw, 16px); }
-    .pull-quote { font-size: clamp(14px, 2vw, 18px); padding: 16px 20px; }
+    .hero-desc { font-size: clamp(15px, 1.8vw, 18px); }
+    h2 { font-size: clamp(28px, 4.5vw, 42px); }
+    p { font-size: clamp(15px, 1.8vw, 19px); }
+    .pull-quote { font-size: clamp(16px, 2.3vw, 22px); padding: 16px 20px; }
     .adventure-box { padding: 24px 18px; }
-    .adventure-box h3 { font-size: clamp(18px, 3.5vw, 22px); }
-    .adventure-box p { font-size: clamp(12px, 1.6vw, 14px); }
-    .collector-info h3 { font-size: clamp(16px, 3vw, 20px); }
-    .collector-info p { font-size: clamp(12px, 1.8vw, 14px); }
-    .author-info h3 { font-size: clamp(16px, 3vw, 20px); }
-    .author-info p { font-size: clamp(12px, 1.8vw, 14px); }
-    .crew-name { font-size: clamp(13px, 2.2vw, 15px); }
-    .team-strip h3 { font-size: clamp(20px, 3vw, 26px); }
-    .team-strip p { font-size: clamp(12px, 1.8vw, 14px); }
-    .hashtag-cloud span { font-size: 10px; padding: 5px 12px; }
+    .adventure-box h3 { font-size: clamp(20px, 3.8vw, 24px); }
+    .adventure-box p { font-size: clamp(14px, 1.8vw, 17px); }
+    .collector-info h3 { font-size: clamp(18px, 3.2vw, 22px); }
+    .collector-info p { font-size: clamp(13px, 1.8vw, 15px); }
+    .team-strip h3 { font-size: clamp(22px, 3.5vw, 30px); }
+    .team-strip p { font-size: clamp(13px, 1.8vw, 16px); }
+    .team-name { font-size: 18px; }
+    .author-info h3 { font-size: clamp(18px, 3.2vw, 22px); }
+    .author-info p { font-size: clamp(13px, 1.8vw, 15px); }
+    .crew-role { font-size: 9px; }
+    .crew-name { font-size: clamp(14px, 2.2vw, 16px); }
+    .hashtag-cloud span { font-size: 11px; padding: 5px 12px; }
   }
 </style>
 </head>
@@ -802,7 +847,7 @@
 
 
 <!-- ACTUAL PHOTO -->
-<section style="padding-top: 0; padding-bottom: 0;">
+<section style="min-height: 100vh; padding-top: 0; padding-bottom: 0; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: start; scroll-snap-stop: always;">
   <img src="launch_photo.jpg"
        alt="With Thiru. Pavankumar G. Giriyappanavar IAS — District Collector, Coimbatore — Official Launch Night"
        style="width:100%; border-radius:12px; border:1px solid rgba(201,168,76,0.3); display:block;" />
@@ -1027,7 +1072,7 @@
 </section>
 
 <!-- HASHTAGS -->
-<section style="padding-top: 20px;">
+<section style="min-height: 100vh; padding-top: 20px; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: start; scroll-snap-stop: always;">
   <div class="separator">✦ ✦ ✦</div>
 
   <div class="chapter-tag">Share This Story</div>
@@ -1058,7 +1103,7 @@
 
 
 <!-- ENGAGEMENT SECTION -->
-<section id="engagement" style="max-width: 860px; margin: 0 auto; padding: 80px 24px;">
+<section id="engagement" style="min-height: 100vh; max-width: 860px; margin: 0 auto; padding: 80px 24px; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: start; scroll-snap-stop: always;">
   <div class="chapter-tag">Engagement</div>
   <h2>Share Your Thoughts</h2>
   <div id="stats" style="margin: 20px 0; font-family: 'Space Mono', monospace; font-size: 14px; color: var(--gold);">
